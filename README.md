@@ -1,7 +1,7 @@
 # KANAP OpenClassRooms | Projet 5 
 Réalisation d'un site e-commerce à partir de fichier fournis (API, back et front)
 
-# Kanap #
+# Projet #
 
 Dans ce projet il était important de bien commenter le code, aussi d'utiliser le destructuring lorsque c'était possible.
 
