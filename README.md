@@ -1,18 +1,17 @@
-# KANAP
-P5 OpenClassrooms
+# KANAP OpenClassRooms | Projet 5 
+Réalisation d'un site e-commerce à partir de fichier fournis (API, back et front)
 
 # Kanap #
 
-This is the front end and back end server for Project 5 of the Web Developer path.
+Dans ce projet il était important de bien commenter le code, aussi d'utiliser le destructuring lorsque c'était possible.
 
 ### Back end Prerequisites ###
 
-You will need to have Node and `npm` installed locally on your machine.
+Pour le back end vous devez tout d'abord avoir Node et npm d'installer localement sur votre machine.
 
 ### Back end Installation ###
 
-Clone this repo. From the "back" folder of the project, run `npm install`. You 
-can then run the server with `node server`. 
-The server should run on `localhost` with default port `3000`. If the
-server runs on another port for any reason, this is printed to the
-console when the server starts, e.g. `Listening on port 3001`.
+Ensuite, cloné ce repo dans votre machine.
+Depuis le fichier "back", faite un clique droit et lancé le avec GitBash "GitBashHere", tapé ensuite npm install.
+Vous pourrez maintenant lancé le serveur avec node server.
+Taper comme dernière ligne de commande "node server.js" et le serveur devrais ce lancé en local sur le port 3000 et vous pourrez consulter le site en local avec les produits.
