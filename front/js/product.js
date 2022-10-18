@@ -1,14 +1,15 @@
-var kanapURL = window.location.href;
-var url = new URL(kanapURL);
+var str = window.location.href;
+var url = new URL(str);
 var idProduct = url.searchParams.get("id");
 
 // récupération des donnéees de quantités et de couleurs grâce a ces deux lignes de code
+
 const colorPicked = document.querySelector("#colors");
 const quantityPicked = document.querySelector("#quantity");
 
 // Récupération des articles de l'API*
 
-fetch("http://localhost:3000/api/products/" + idProduct)
+fetch ("http://localhost:3000/api/products/" + idProduct)
     .then((response) => response.json())
     .then((res) => handleData(res));
 

@@ -1,48 +1,65 @@
-fillSection();idnode
+fetch("http://localhost:3000/api/products")
+    .then((res) => res.json())
+    .then((data) => addProducts(data));
 
-// articles de l'API
-async function getArticles() {
-    var articlesCatch = await fetch("http://localhost:3000/api/products")
-    return await articlesCatch.json();
+function addProducts(data) {
+    // const _id = data[0]._id
+    // const imageUrl = data[0].imageUrl
+    // const altTxt = data[0].altTxt
+    // const name  = data[0].name
+    // const description = data[0].description
+
+    data.forEach((KANAP) => {
+
+        const { _id, imageUrl, altTxt, name, description } = KANAP
+
+        const anchor = makeAnchor(_id);
+
+        const image = MakeImage(imageUrl, altTxt)
+        const article = document.createElement("article")
+        const h3 = MakeH3(name);
+        const p = MakePragraph(description);
+
+        article.appendChild(image)
+        article.appendChild(h3)
+        article.appendChild(p)
+        AppendArticleToAnchor(anchor, article);
+    });
 }
 
-// Répartition des données de l'API dans le DOM
-async function fillSection() {
-    var result = await getArticles()
-        .then(function (resultatAPI) {
-            const articles = resultatAPI;
-            console.table(articles);
-            for (let article in articles) {
+function makeAnchor(id) {
+    const anchor = document.createElement('a')
+    anchor.href = "./product.html?id=42" + id
+    return anchor
+}
 
-                // "a"
-                let productLink = document.createElement("a");
-                document.querySelector(".items").appendChild(productLink);
-                productLink.href = `product.html?id=${resultatAPI[article]._id}`;
+function AppendArticleToAnchor(anchor, article) {
+    const items = document.querySelector("#items")
+    if (items != null) {
+        items.appendChild(anchor)
+        anchor.appendChild(article)
+    }
+}
 
-                // "article"
-                let productArticle = document.createElement("article");
-                productLink.appendChild(productArticle);
+function MakeImage(imageUrl, altTxt) {
+    const image = document.createElement("img")
+    image.src = imageUrl
+    image.alt = altTxt
+    image.removeAttribute("style")
+    image.removeAttribute("title")
+    return image
+}
 
-                // l'image
-                let productImg = document.createElement("img");
-                productArticle.appendChild(productImg);
-                productImg.src = resultatAPI[article].imageUrl;
-                productImg.alt = resultatAPI[article].altTxt;
+function MakeH3(name) {
+    const h3 = document.createElement("h3")
+    h3.textContent = name
+    h3.classList.add("productName")
+    return h3
+}
 
-                // "h3"
-                let productName = document.createElement("h3");
-                productArticle.appendChild(productName);
-                productName.classList.add("productName");
-                productName.innerHTML = resultatAPI[article].name;
-
-                // "p"
-                let productDescription = document.createElement("p");
-                productArticle.appendChild(productDescription);
-                productDescription.classList.add("productName");
-                productDescription.innerHTML = resultatAPI[article].description;
-            }
-        })
-        .catch(function (error) {
-            return error;
-        });
+function MakePragraph(description) {
+    const p = document.createElement("p")
+    p.textContent = description
+    p.classList.add("productDescription")
+    return p
 }
