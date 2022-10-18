@@ -1,45 +1,62 @@
-fillSection();idnode 
+fetch("http://localhost:3000/api/products")
+    .then((res) => res.json())
+    .then ((data) => AddProducts(data))
 
-async function getArticles() {
-    var articlesCatch = await fetch("http://localhost:3000/api/products")
-    return await articlesCatch.json();
-}
+    function AddProducts (kanap_data) {
 
-async function fillSection() {
-    var result = await getArticles()
-        .then(function (resultatAPI) {
-            const articles = resultatAPI;
-            for (let article in articles) {
 
-                // "a"
-                let productLink = document.createElement("a");
-                document.querySelector(".items").appendChild(productLink);
-                productLink.href = `product.html?id=${resultatAPI[article]._id}`;
+        kanap_data.forEach((kanap) => {
+            const {_id, name, description, imageUrl, altTxt} = kanap;
+            const anchor = MakeAnchor(_id);
+            const article = document.createElement("article");
+            const image = MakeImage(imageUrl, altTxt);
+            const h3 = Makeh3(name);
+            const p = MakeParagraph(description);
 
-                // "article"
-                let productArticle = document.createElement("article");
-                productLink.appendChild(productArticle);
-
-                // l'image
-                let productImg = document.createElement("img");
-                productArticle.appendChild(productImg);
-                productImg.src = resultatAPI[article].imageUrl;
-                productImg.alt = resultatAPI[article].altTxt;
-
-                // "h3"
-                let productName = document.createElement("h3");
-                productArticle.appendChild(productName);
-                productName.classList.add("productName");
-                productName.innerHTML = resultatAPI[article].name;
-
-                // "p"
-                let productDescription = document.createElement("p");
-                productArticle.appendChild(productDescription);
-                productDescription.classList.add("productName");
-                productDescription.innerHTML = resultatAPI[article].description;
-            }
+            appendElementsToArticle(article, [image, h3, p]);
+            appendArticleToAnchor(anchor, article);
         })
-        .catch(function (error) {
-            return error;
-        });
-}
+    }
+
+    function appendElementsToArticle(article, array) {
+        array.forEach((item) => {
+            article.appendChild(item);
+        })
+    }
+
+    function MakeAnchor (id) {
+        const anchor = document.createElement("a");
+        anchor.href = "product.html?id=" + id;
+        return anchor;
+    }
+
+    function appendArticleToAnchor (anchor, article) {
+        const items = document.querySelector(".items");
+        if (items != null ) {
+            items.appendChild(anchor);
+            anchor.appendChild(article);
+        }
+    }
+
+    function MakeImage (imageUrl, altTxt) {
+        const image = document.createElement("img");
+        image.src = imageUrl;
+        image.alt = altTxt;
+        image.removeAttribute("title");
+        image.removeAttribute("style");
+        return image;
+    }
+
+    function Makeh3 (name) {
+        const h3 = document.createElement("h3");
+        h3.textContent = name;
+        h3.classList.add("product-name");
+        return h3;
+    }
+
+    function MakeParagraph (description) {
+        const p = document.createElement("p");
+        p.textContent = description;
+        p.classList.add("product-description");
+        return p;
+    }
