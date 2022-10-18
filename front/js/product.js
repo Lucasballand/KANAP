@@ -16,8 +16,8 @@ function getArticle() {
         })
 
         // Répartition des données de l'API dans le DOM
-        .then(async function (resultatAPI) {
-            article = await resultatAPI;
+        .then(async function (article) {
+            article = await article;
             console.table(article);
             if (article) {
                 getPost(article);
